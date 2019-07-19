@@ -1,7 +1,6 @@
 package com.truedialog.client;
 
 
-import com.truedialog.client.config.AuthConfig;
 import com.truedialog.client.config.TrueDialogConfig;
 import com.truedialog.client.context.account.AccountContext;
 import com.truedialog.client.context.account.AccountMediaContext;
@@ -22,10 +21,10 @@ import com.truedialog.client.rest.RestClient;
 import com.truedialog.client.rest.account.AccountAttributeRest;
 import com.truedialog.client.rest.account.AccountMediaRest;
 import com.truedialog.client.rest.account.AccountRest;
+import com.truedialog.client.rest.account.ApiKeyRest;
 import com.truedialog.client.rest.action.ImportRest;
 import com.truedialog.client.rest.action.ScheduleRest;
 import com.truedialog.client.rest.callback.CallbackRest;
-import com.truedialog.client.rest.account.ApiKeyRest;
 import com.truedialog.client.rest.campaign.*;
 import com.truedialog.client.rest.channel.ChannelRest;
 import com.truedialog.client.rest.channel.LongCodeRest;
@@ -44,10 +43,6 @@ import com.truedialog.client.rest.user.UserRest;
 
 public class TrueDialogClient {
 
-    //TODO remove
-    private static final String USER_NAME = "Integraton_User_1";
-    private static final String PASSwORD = "Pivot123!";
-
     private int accountId;
     private Integer withAccountId = null;
     private RestClient restClient;
@@ -63,11 +58,7 @@ public class TrueDialogClient {
 
     private void initClient() {
 
-        restClient = RestClient.fromClientConfig(
-                // TrueDialogConfig.fromConfigFile()
-                new TrueDialogConfig.TrueDialogClientConfigBuilder(new AuthConfig(USER_NAME, PASSwORD))
-                        .build()
-        );
+        restClient = RestClient.fromClientConfig(TrueDialogConfig.fromConfigFile());
 
         if (accountId <= 0) {
             throw new IllegalStateException("AccountId must be specified in config file, or passed as constructor parameter.");
@@ -100,7 +91,7 @@ public class TrueDialogClient {
                 restClient.getService(AccountAttributeRest.AccountAttributeService.class));
     }
 
-    public AccountMediaContext getMedia(){
+    public AccountMediaContext getMedia() {
         return new AccountMediaContext(this, restClient.getService(AccountMediaRest.AccountMediaService.class));
     }
 

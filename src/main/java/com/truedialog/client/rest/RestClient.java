@@ -1,12 +1,12 @@
 package com.truedialog.client.rest;
 
 import com.truedialog.client.config.TrueDialogConfig;
-import okhttp3.*;
-import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.Credentials;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +23,6 @@ public class RestClient {
         String authCredentials = Credentials.basic(configuration.getAuthConfig().getUserName(),
                 configuration.getAuthConfig().getPassword());
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     Request newRequest = chain.request().newBuilder()
@@ -33,7 +31,6 @@ public class RestClient {
                             .build();
                     return chain.proceed(newRequest);
                 })
-                .addInterceptor(interceptor)
                 .build();
 
         retrofit = new Retrofit.Builder()

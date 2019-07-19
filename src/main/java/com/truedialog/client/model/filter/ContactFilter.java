@@ -44,11 +44,11 @@ public class ContactFilter extends Base{
 
     /**
      * A function that can be run on an operand.
-     * <remarks>
+     * <p>
      * The function will have to run on SQL, and will only be able to accept
      * just one parameter.  If null, we perform no additional operation
      * on the column.
-     * </remarks>
+     * </p>
      */
     @JsonProperty("OperandFunction")
     private String operandFunction;
