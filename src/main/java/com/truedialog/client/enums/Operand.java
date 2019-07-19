@@ -5,57 +5,57 @@ public enum Operand {
 
     /**
      * Filter contacts by subscription ID
-     * <remarks>
+     * <p>
      * Can be used with "Subscription" FilterType only.
-     * </remarks>
+     * </p>
      */
     SUBSCRIPTION_ID(1),
 
     /**
      * Filter contacts by the date of creation.
-     * <remarks>
+     * <p>
      * Can be used with "Contact" FilterType only.
-     * </remarks>
+     * </p>
      */
     CREATED(2),
 
     /**
      * Filter contacts by contact ID.
-     * <remarks>
+     * <p>
      * Can be used with "Contact" FilterType only.
-     * </remarks>
+     * </p>
      */
     ID(3),
 
     /**
      * Filter contacts by contact's Email field.
-     * <remarks>
+     * <p>
      * Can be used with "Contact" FilterType only.
-     * </remarks>
+     * </p>
      */
     EMAIL(4),
 
     /**
      * Filter contacts by contact's PhoneNumber field.
-     * <remarks>
+     * <p>
      * Can be used with "Contact" FilterType only.
-     * </remarks>
+     * </p>
      */
     PHONE(5),
 
     /**
      * Filter contacts by keyword ID
-     * <remarks>
+     * <p>
      * Can be used with "Keyword" FilterType only.
-     * </remarks>
+     * </p>
      */
     CONTACT_BY_KEYWORD(6),
 
     /**
      * Filter contacts by keyword send date.
-     * <remarks>
+     * <p>
      * Can be used with "Keyword" FilterType only.
-     * </remarks>
+     * </p>
      */
     KEYWORD_SENT_DATE(7);
 

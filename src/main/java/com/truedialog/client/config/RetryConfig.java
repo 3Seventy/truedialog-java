@@ -20,25 +20,25 @@ public class RetryConfig {
 
     /**
      * The minimum allowed value for timeouts.
-     * <remarks>
+     * <p>
      * For incremental, and exponential policies this value is the base value.
-     * </remarks>
+     * </p>
      */
     private long minInterval;
 
     /**
      * The maximum allowed value for timeouts.
-     * <remarks>
+     * <p>
      * For incremental, and exponential policies this value is the base value.
-     * </remarks>
+     * </p>
      */
     private long maxInterval;
 
     /**
      * How often (in miliseconds) we should attempt to retry.
-     * <remarks>
+     * <p>
      * For incremental, and exponential policies this value is the base value.
-     * </remarks>
+     * </p>
      */
     private long interval;
 

@@ -13,8 +13,7 @@ public class TrueDialogConfig {
         this.authConfig = authConfig;
     }
 
-    private final static String DEFAULT_URL = "https://staging-api.truedialog.com/api/main/"; //DEBUG server
-//    private final static String DEFAULT_URL = "https://api.truedialog.com/api/v2.1/";
+    private final static String DEFAULT_URL = "https://api.truedialog.com/api/v2.1/";
 
     private final static String DEFAULT_TIME_OUT = "3";
 
@@ -107,7 +106,7 @@ public class TrueDialogConfig {
      * The builder class
      * internal use
      */
-    public static class TrueDialogClientConfigBuilder {
+    static class TrueDialogClientConfigBuilder {
 
         private AuthConfig builderAuthConfig;
         private String builderBaseUrl;
@@ -115,11 +114,11 @@ public class TrueDialogConfig {
         private Integer builderHttpTimeout;
         private String builderUserAgent;
 
-        public TrueDialogClientConfigBuilder(AuthConfig authConfig) {
+        TrueDialogClientConfigBuilder(AuthConfig authConfig) {
             this.builderAuthConfig = authConfig;
         }
 
-        public TrueDialogClientConfigBuilder setBaseUrl(String baseUrl) {
+        TrueDialogClientConfigBuilder setBaseUrl(String baseUrl) {
             if (baseUrl.isEmpty()) {
                 baseUrl = DEFAULT_URL;
             }
@@ -127,22 +126,22 @@ public class TrueDialogConfig {
             return this;
         }
 
-        public TrueDialogClientConfigBuilder setRetryPolicy(RetryConfig retryPolicy) {
+        TrueDialogClientConfigBuilder setRetryPolicy(RetryConfig retryPolicy) {
             builderRetryPolicy = retryPolicy;
             return this;
         }
 
-        public TrueDialogClientConfigBuilder setHttpTimeout(Integer httpTimeout) {
+        TrueDialogClientConfigBuilder setHttpTimeout(Integer httpTimeout) {
             builderHttpTimeout = httpTimeout;
             return this;
         }
 
-        public TrueDialogClientConfigBuilder setUserAgent(String userAgent) {
+        TrueDialogClientConfigBuilder setUserAgent(String userAgent) {
             builderUserAgent = userAgent;
             return this;
         }
 
-        public TrueDialogConfig build() {
+        TrueDialogConfig build() {
             TrueDialogConfig trueDialogConfig = new TrueDialogConfig(builderAuthConfig);
 
             if (this.builderBaseUrl==null||this.builderBaseUrl.isEmpty()) {
