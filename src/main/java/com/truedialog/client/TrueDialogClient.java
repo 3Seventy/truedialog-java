@@ -58,11 +58,16 @@ public class TrueDialogClient {
 
     private void initClient() {
 
-        restClient = RestClient.fromClientConfig(TrueDialogConfig.fromConfigFile());
+        TrueDialogConfig configuration = TrueDialogConfig.fromConfigFile();
 
         if (accountId <= 0) {
-            throw new IllegalStateException("AccountId must be specified in config file, or passed as constructor parameter.");
+            accountId = Integer.parseInt(configuration.getAuthConfig().getAccountId() == null ? "0" : configuration.getAuthConfig().getAccountId());
+            if (accountId <= 0) {
+                throw new IllegalStateException("AccountId must be specified in config file, or passed as constructor parameter.");
+            }
         }
+
+        restClient = RestClient.fromClientConfig(configuration);
     }
 
     public int getAccountId() {

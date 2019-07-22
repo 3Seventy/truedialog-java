@@ -15,7 +15,7 @@ public class TrueDialogConfig {
 
     private final static String DEFAULT_URL = "https://api.truedialog.com/api/v2.1/";
 
-    private final static String DEFAULT_TIME_OUT = "3";
+    private final static String DEFAULT_TIME_OUT = "30";
 
     /**
      * Base URL where requests are sent to.

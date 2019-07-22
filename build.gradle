@@ -9,7 +9,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 ext{
-    libVersion = '0.0.1'
+    libVersion = '0.0.2'
     libPackage = 'com.truedialog'
     libName = 'client'
 }
