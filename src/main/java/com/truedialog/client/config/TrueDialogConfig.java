@@ -78,9 +78,9 @@ public class TrueDialogConfig {
         String password = properties.getProperty(PROPERTY_PREFIX + "password");
 
         return new TrueDialogConfig.TrueDialogClientConfigBuilder(new AuthConfig(userName, password))
-                .setBaseUrl(properties.getProperty(PROPERTY_PREFIX + "baseUrl"))
-                .setHttpTimeout(Integer.parseInt(properties.getProperty("timeout")))
-                .setUserAgent(properties.getProperty("userAgent"))
+                .setBaseUrl(properties.getProperty(PROPERTY_PREFIX + "baseUrl", DEFAULT_URL))
+                .setHttpTimeout(Integer.parseInt(properties.getProperty(PROPERTY_PREFIX + "timeout", DEFAULT_TIME_OUT)))
+                .setUserAgent(properties.getProperty(PROPERTY_PREFIX + "userAgent"))
                 .setRetryPolicy(readRetryConfig(properties))
                 .build();
 
@@ -90,12 +90,12 @@ public class TrueDialogConfig {
         RetryConfig retryConfig = new RetryConfig();
 
         retryConfig.setEnabled(Boolean.getBoolean(properties.getProperty(PROPERTY_PREFIX + "enabled", "false")));
-        retryConfig.setInterval(Long.parseLong(properties.getProperty(PROPERTY_PREFIX + "interval")));
+        retryConfig.setInterval(Long.parseLong(properties.getProperty(PROPERTY_PREFIX + "interval", "0")));
         retryConfig.setMaxInterval(Long.parseLong(properties.getProperty(PROPERTY_PREFIX + "maxInterval", "500")));
-        retryConfig.setMinInterval(Long.parseLong(properties.getProperty(PROPERTY_PREFIX + "minInterval", "10_000")));
+        retryConfig.setMinInterval(Long.parseLong(properties.getProperty(PROPERTY_PREFIX + "minInterval", "10000")));
         retryConfig.setMaxTries(Integer.parseInt(properties.getProperty(PROPERTY_PREFIX + "maxTries", "3")));
         try {
-            retryConfig.setTypeName(properties.getProperty(PROPERTY_PREFIX + "type"));
+            retryConfig.setTypeName(properties.getProperty(PROPERTY_PREFIX + "type", ""));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class TrueDialogConfig {
         }
 
         TrueDialogClientConfigBuilder setBaseUrl(String baseUrl) {
-            if (baseUrl.isEmpty()) {
+            if (baseUrl == null || baseUrl.isEmpty()) {
                 baseUrl = DEFAULT_URL;
             }
             builderBaseUrl = baseUrl;
@@ -144,7 +144,7 @@ public class TrueDialogConfig {
         TrueDialogConfig build() {
             TrueDialogConfig trueDialogConfig = new TrueDialogConfig(builderAuthConfig);
 
-            if (this.builderBaseUrl==null||this.builderBaseUrl.isEmpty()) {
+            if (this.builderBaseUrl == null || this.builderBaseUrl.isEmpty()) {
                 trueDialogConfig.baseUrl = DEFAULT_URL;
             } else {
                 trueDialogConfig.baseUrl = this.builderBaseUrl;
