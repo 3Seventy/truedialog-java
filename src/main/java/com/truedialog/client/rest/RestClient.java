@@ -10,11 +10,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class RestClient {
 
     private Map<Class, Object> services = Collections.synchronizedMap(new HashMap<>());
     private static final String AUTH_HEADER = "Authorization";
+    private static final String USER_AGENT_HEADER = "User-Agent";
     private static final String ACCEPT_HEADER = "Accept";
 
     private final Retrofit retrofit;
@@ -25,12 +27,17 @@ public class RestClient {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
-                    Request newRequest = chain.request().newBuilder()
+                    Request.Builder builder = chain.request().newBuilder()
                             .addHeader(ACCEPT_HEADER, "application/json")
-                            .addHeader(AUTH_HEADER, authCredentials)
-                            .build();
+                            .addHeader(AUTH_HEADER, authCredentials);
+                    String userAgent = configuration.getUserAgent();
+                    if (userAgent != null && !userAgent.isEmpty()){
+                        builder.addHeader(USER_AGENT_HEADER, userAgent);
+                    }
+                    Request newRequest = builder.build();
                     return chain.proceed(newRequest);
                 })
+                .callTimeout(configuration.getHttpTimeout(), TimeUnit.SECONDS)
                 .build();
 
         retrofit = new Retrofit.Builder()
