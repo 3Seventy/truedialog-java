@@ -1,17 +1,101 @@
+import java.nio.file.Paths
+
+plugins {
+    id "com.jfrog.bintray" version "1.8.4"
+}
 apply plugin: 'java'
 apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
+ext{
+    libVersion = '0.0.1'
+    libPackage = 'com.truedialog'
+    libName = 'client'
+}
+
+group libPackage
+version libVersion
 
 sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+def bintrayProperties = new Properties()
+File propFile = Paths.get(
+        System.properties['user.home'].toString(),
+        ".gradle",
+        "bintray.properties").toFile()
+if(propFile.exists()){
+    bintrayProperties.load(propFile.newDataInputStream())
+}
+bintray {
+    user = bintrayProperties["bintray.user"]
+    key = bintrayProperties["bintray.apikey"]
+    configurations = ['archives']
+    pkg {
+        repo = 'TrueDialog'
+        name = 'Client'
+        userOrg = user
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/3Seventy/truedialog-java.git'
+        version {
+            name = libVersion
+            released  = new Date()
+            vcsTag = libVersion
+        }
+    }
+    publications = ['bintrayPublish']
+}
+
+jar.baseName = libName
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+    from sourceSets.main.allSource
+    apply plugin: 'java'
+    classifier = 'sources'
+    baseName = libName
+}
+
+javadoc.failOnError = false
+
+task javadocJar(type: Jar, dependsOn: project.javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+    baseName = libName
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+publishing {
+    publications {
+        bintrayPublish(MavenPublication) {
+            artifactId libName
+            groupId libPackage
+            version libVersion
+            from components.java
+
+            artifact sourcesJar
+            artifact javadocJar
+
+//            pom.withXml {
+//                asNode().dependencies.each() {
+//                    it.parent().remove(it)
+//                }
+//            }
+        }
+    }
+}
+
 
 def retrofit_version = "2.5.0"
 def okhttp_version = "3.14.0"
 def jackson_version = "2.9.9"
-
-repositories{
-    mavenCentral()
-    jcenter()
-}
 
 dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
