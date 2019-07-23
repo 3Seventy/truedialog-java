@@ -38,9 +38,9 @@ bintray {
     key = bintrayProperties["bintray.apikey"]
     configurations = ['archives']
     pkg {
-        repo = 'TrueDialog'
+        repo = 'com.truedialog.client'
         name = 'Client'
-        userOrg = user
+        userOrg = 'truedialog'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/3Seventy/truedialog-java.git'
         version {
